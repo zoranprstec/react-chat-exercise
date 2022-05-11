@@ -1,25 +1,24 @@
-import logo from './logo.svg';
-import './App.css';
+import Message from "./Components/Message"
+import messages from "./ChatData/messages.json"
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+export default function App() {
+    const mess = messages.data.comments.map(message => {
+        if(!message.parent_id) {
+            return <Message 
+                author={message.author}
+                text={message.text}
+                timestamp={message.timestamp}
+            />
+        }
+    })
+
+    return (
+        <div>
+            {mess}
+            <form className="send-message-form">
+                <input />
+                <button>send</button>
+            </form>
+        </div>
+    )
 }
-
-export default App;
