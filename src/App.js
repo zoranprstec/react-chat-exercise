@@ -3,13 +3,17 @@ import messages from "./ChatData/messages.json"
 
 export default function App() {
     const mess = messages.data.comments.map(message => {
-        if(!message.parent_id) {
-            return <Message 
-                author={message.author}
-                text={message.text}
-                timestamp={message.timestamp}
-            />
+        const properties = {
+            author: message.author,
+            text: message.text,
+            timestamp: message.timestamp,
+            id: message.id,
+            parent_id: message.parent_id || null
         }
+        
+        return <Message 
+            properties={properties}
+        />
     })
 
     return (

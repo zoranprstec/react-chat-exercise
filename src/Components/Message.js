@@ -1,7 +1,8 @@
 import ChildMessage from "./ChildMessage"
+import MessageBubble from "./MessageBubble"
 
 export default function Message(props) {
-    const timestamp = props.timestamp
+    const timestamp = props.properties.timestamp
     const dayNum = new Date(timestamp).getDay()
     const date = new Date(timestamp).toLocaleString(
         'en-US', { hour: 'numeric', minute: 'numeric', hour12: true }
@@ -41,21 +42,15 @@ export default function Message(props) {
 
     const localDate = new Date(timestamp).toLocaleString("HR-hr", { day: "numeric", month: "numeric", year: "numeric" })
     const fullDate = localDate.replace(/ /g, "")
+    const msgClass = props.properties.parent_id ? "msg--child" : "msg"
 
     return (
-        <div className="msg">
-            <p className="msg--date">{`${day}, ${fullDate}`}</p>
-            <div className="msg--img-body">
-                <img className="msg--img" alt="img" src={props.author.picture} />
-                <div className="msg--body">
-                    <div className="msg--bubble">
-                        <h4>{props.author.name}</h4>
-                        <p>{props.text}</p>
-                    </div>
-                    <span className="msg--time-sent">{date} | <a className="msg--reply">reply()</a></span>
-                </div>
-            </div>
-            <ChildMessage />
+        <div className={msgClass}>
+            {!props.properties.parent_id && <p className="msg--date">{`${day}, ${fullDate}`}</p>}
+            <MessageBubble
+                properties={props.properties}
+                date={date}
+            />
         </div>
     )
 }

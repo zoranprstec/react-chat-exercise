@@ -3,7 +3,9 @@
 }
 
 :root {
-    --small-space-around: 0.5em;
+    --small-margin: 0.75em;
+    --img-size: 48px;
+    --msg-padding: 32px;
 }
 
 body {
@@ -16,9 +18,9 @@ code {
     font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New', monospace;
 }
 
-.msg {
-    border: 1px solid black;
-    padding: 32px;
+.msg, .msg--child {
+    padding: 1rem 2rem 0.5rem 2rem;
+    /* border: 1px solid black; */
 }
 
 .msg--date {
@@ -27,8 +29,12 @@ code {
     text-align: center;
 }
 
-.msg--img-body {
+.msg--img-body, .msg--img-body-child {
     display: flex;
+}
+
+.msg--img-body-child {
+    margin-left: calc(var(--img-size) + var(--small-margin));
 }
 
 .msg--body {
@@ -41,8 +47,8 @@ code {
     border: 1px solid #D8DEE7;
     border-radius: 8px;
     padding: 1rem;
-    margin-left: var(--small-space-around);
-    margin-bottom: var(--small-space-around);
+    margin-left: var(--small-margin);
+    margin-bottom: 0.2em;
     /* max-width: 800px; // ne trima bubble na novi length */
 }
 
@@ -55,17 +61,29 @@ code {
 }
 
 .msg--img {
-    width: 48px;
+    width: var(--img-size);
     height: 100%;
     border-radius: 24px;
 }
 
 .msg--time-sent {
     color: #82878D;
-    margin-left: var(--small-space-around);
+    margin-left: var(--small-margin);
 }
 
 .msg--reply {
     color: #023168;
     cursor: pointer;
+}
+
+.msg + .msg--child .msg--img-body-child::before {
+    content: " ";
+    position: absolute;
+    transform: translateX(calc(-1 * var(--img-size) / 2 - var(--small-margin)))
+        translateY(calc(-1 * var(--img-size) / 2 - 10px));
+    height: calc(var(--msg-padding) + calc(var(--img-size) / 2));
+    width: 1.2rem;
+    border-left: 2px solid #D8DEE7;
+    border-bottom: 2px solid #D8DEE7;
+    border-radius: 0 0 0 3px;
 }
