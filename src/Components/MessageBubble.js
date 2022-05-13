@@ -1,6 +1,13 @@
+import { useEffect } from "react"
+
 export default function MessageBubble(props) {
-    // const msgClass = `msg--img-body ${props.properties.parent_id && "msg--img-body-child"}`
-    const msgClass = props.properties.parent_id ? "msg--img-body-child" : "msg--img-body"
+    const isChild = props.properties.parent_id
+    const msgClass = isChild ? "msg--img-body-child" : "msg--img-body"
+
+
+    useEffect(() => {
+        isChild && props.setReplyCount(prevCount => prevCount + 1)
+    }, [])
 
     return (
         <div className={msgClass}>
@@ -10,7 +17,7 @@ export default function MessageBubble(props) {
                     <h4>{props.properties.author.name}</h4>
                     <p>{props.properties.text}</p>
                 </div>
-                <span className="msg--time-sent">{props.date} | <a className="msg--reply">reply()</a></span>
+                <span className="msg--time-sent">{props.date} | <span className="msg--reply">Reply {!isChild && props.replyCount > 0 && `(${props.replyCount})`}</span></span>
             </div>
         </div>
     )

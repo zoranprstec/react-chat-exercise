@@ -6,21 +6,20 @@
     --small-margin: 0.75em;
     --img-size: 48px;
     --msg-padding: 32px;
+    --plus-size: 1rem;
+    --plus-container-size: 2rem;
+    --form-btn-height: 45px;
 }
 
 body {
     margin: 0;
+    padding-bottom: 5rem;
     font-family: 'Inter', sans-serif;
     background: #ECEEF1;
 }
 
 code {
     font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New', monospace;
-}
-
-.msg, .msg--child {
-    padding: 1rem 2rem 0.5rem 2rem;
-    /* border: 1px solid black; */
 }
 
 .msg--date {
@@ -31,6 +30,7 @@ code {
 
 .msg--img-body, .msg--img-body-child {
     display: flex;
+    padding: 1rem 2rem 0.5rem 2rem;
 }
 
 .msg--img-body-child {
@@ -48,7 +48,7 @@ code {
     border-radius: 8px;
     padding: 1rem;
     margin-left: var(--small-margin);
-    margin-bottom: 0.2em;
+    margin-bottom: 0.4em;
     /* max-width: 800px; // ne trima bubble na novi length */
 }
 
@@ -76,7 +76,7 @@ code {
     cursor: pointer;
 }
 
-.msg + .msg--child .msg--img-body-child::before {
+.msg--img-body + .msg--img-body-child::before {
     content: " ";
     position: absolute;
     transform: translateX(calc(-1 * var(--img-size) / 2 - var(--small-margin)))
@@ -86,4 +86,70 @@ code {
     border-left: 2px solid #D8DEE7;
     border-bottom: 2px solid #D8DEE7;
     border-radius: 0 0 0 3px;
+}
+
+/* Form ---------------------------------- */
+
+.form {
+    display: flex;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 4rem;
+    margin: var(--small-margin);
+    padding: 0.5rem;
+    border: 1px solid #D8DEE7;
+    border-radius: 8px;
+    background-color: white;
+    align-items: center;
+}
+
+.form--plus-button, .form--submit {
+    font-family: 'Inter';
+    font-size: 18px;
+    flex-grow: 0;
+    border: none;
+    border-radius: 6px;
+    background-color: #023168;
+    color: white;
+    cursor: pointer;
+    height: var(--form-btn-height);
+}
+
+.form--plus-button {
+    width: var(--form-btn-height);
+}
+
+.form--input {
+    font-size: 18px;
+    padding: 0.6rem;
+    width: auto;
+    flex-grow: 1;
+    border: none;
+    color: #333333;
+}
+
+.form--input:focus {
+    outline: none;
+}
+
+.cross {
+    position: relative;
+    height: var(--plus-container-size);
+    width: auto;
+}
+
+.cross:before, .cross:after {
+    position: absolute;
+    left: 50%;
+    top: calc((var(--plus-container-size) - var(--plus-size)) / 2);
+    height: var(--plus-size);
+    width: 2px;
+    content: ' ';
+    background-color: white;
+}
+
+.cross:after {
+    transform: rotate(90deg);
 }
